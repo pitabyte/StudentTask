@@ -5,6 +5,7 @@ import com.example.demo.Student.StudentService;
 import com.example.demo.Teacher.Teacher;
 import com.example.demo.Teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -34,8 +35,10 @@ import java.util.concurrent.atomic.AtomicLong;
         public List<Student> getAllStudents(@RequestParam(required = false) String sort,
                                             @RequestParam(required = false) String teacherID,
                                             @RequestParam(required = false) String name,
-                                            @RequestParam(required = false) String surname) {
-            System.out.println(studentService.findAll().size());
+                                            @RequestParam(required = false) String surname,
+                                            @RequestParam(required = false) String size,
+                                            @RequestParam(required = false) String page) {
+
             List<Student> output = studentService.findAll();
             if (sort != null && sort.equals("true")) {
                 output = studentService.findAllByName();
@@ -50,6 +53,12 @@ import java.util.concurrent.atomic.AtomicLong;
             }
             if (surname != null) {
                 output = studentService.filterBySurname(output, surname);
+            }
+            if (page != null && size != null) {
+                PagedListHolder pagedListHolder = new PagedListHolder(output);
+                pagedListHolder.setPageSize(Integer.valueOf(size));
+                pagedListHolder.setPage(Integer.valueOf(page));
+                return pagedListHolder.getPageList();
             }
             return output;
         }
