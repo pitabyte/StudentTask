@@ -27,6 +27,7 @@ import java.util.concurrent.atomic.AtomicLong;
         public void addStudent(@RequestBody Student student) {
             student.setId(studentCounter.incrementAndGet());
             studentService.add(student);
+            System.out.println(studentService.findAll().size());
         }
 
         @GetMapping(path = "student")
@@ -34,20 +35,21 @@ import java.util.concurrent.atomic.AtomicLong;
                                             @RequestParam(required = false) String teacherID,
                                             @RequestParam(required = false) String name,
                                             @RequestParam(required = false) String surname) {
-            ArrayList<Student> output = studentService.getStudentRepository().getAll();
+            System.out.println(studentService.findAll().size());
+            List<Student> output = studentService.findAll();
             if (sort != null && sort.equals("true")) {
-                output = studentService.getStudentRepository().getAllByName();
+                output = studentService.findAllByName();
             }
             if (teacherID != null) {
                 Long longTeacherID = Long.valueOf(teacherID);
-                Teacher teacher = teacherService.getTeacherRepository().findById(longTeacherID);
-                output = studentService.getStudentRepository().filterByTeacher(output, teacher);
+                Teacher teacher = teacherService.findById(longTeacherID);
+                output = studentService.filterByTeacher(output, teacher);
             }
             if (name != null) {
-                output = studentService.getStudentRepository().filterByName(output, name);
+                output = studentService.filterByName(output, name);
             }
             if (surname != null) {
-                output = studentService.getStudentRepository().filterBySurname(output, surname);
+                output = studentService.filterBySurname(output, surname);
             }
             return output;
         }
@@ -65,12 +67,12 @@ import java.util.concurrent.atomic.AtomicLong;
 
         @PostMapping(path = "student/{studentID}/assign/{teacherID}")
         public void assignTeacher(@PathVariable Long studentID, @PathVariable Long teacherID) {
-            studentService.assignTeacher(studentID, this.teacherService.getTeacherRepository(), teacherID);
+            studentService.assignTeacher(studentID, this.teacherService, teacherID);
         }
 
         @PostMapping(path = "student/{studentID}/remove/{teacherID}")
         public void removeTeacher(@PathVariable Long studentID, @PathVariable Long teacherID) {
-            studentService.removeTeacher(studentID,this.teacherService.getTeacherRepository(), teacherID);
+            studentService.removeTeacher(studentID,this.teacherService, teacherID);
         }
 
 
@@ -85,20 +87,20 @@ import java.util.concurrent.atomic.AtomicLong;
                                             @RequestParam(required = false) String studentID,
                                             @RequestParam(required = false) String name,
                                             @RequestParam(required = false) String surname) {
-            ArrayList<Teacher> output = teacherService.getTeacherRepository().getAll();
+            List<Teacher> output = teacherService.findAll();
             if (sort != null && sort.equals("true")) {
-                output = teacherService.getTeacherRepository().getAllByName();
+                output = teacherService.findAllByName();
             }
             if (studentID != null) {
                 Long longStudentID = Long.valueOf(studentID);
-                Student student = studentService.getStudentRepository().findById(longStudentID);
-                output = teacherService.getTeacherRepository().filterByStudent(output, student);
+                Student student = studentService.findById(longStudentID);
+                output = teacherService.filterByStudent(output, student);
             }
             if (name != null) {
-                output = teacherService.getTeacherRepository().filterByName(output, name);
+                output = teacherService.filterByName(output, name);
             }
             if (surname != null) {
-                output = teacherService.getTeacherRepository().filterBySurname(output, surname);
+                output = teacherService.filterBySurname(output, surname);
             }
             return output;
         }
@@ -116,12 +118,12 @@ import java.util.concurrent.atomic.AtomicLong;
 
         @PostMapping(path = "teacher/{teacherID}/assign/{studentID}")
         public void assignStudent(@PathVariable Long teacherID, @PathVariable Long studentID) {
-            teacherService.assignStudent(teacherID, this.studentService.getStudentRepository(), studentID);
+            teacherService.assignStudent(teacherID, this.studentService, studentID);
         }
 
         @PostMapping(path = "teacher/{teacherID}/remove/{studentID}")
         public void removeStudent(@PathVariable Long teacherID, @PathVariable Long studentID) {
-            teacherService.removeStudent(teacherID, this.studentService.getStudentRepository(), studentID);
+            teacherService.removeStudent(teacherID, this.studentService, studentID);
         }
     }
 

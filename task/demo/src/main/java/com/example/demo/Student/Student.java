@@ -10,19 +10,31 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
-
+@Entity
+@Table
 public class Student {
+    @Id
     private Long id;
     private String name;
     private String surname;
     private int age;
     private String email;
     private String major;
+
+    @ManyToMany(mappedBy = "students")
     @JsonSerialize(using = CustomTeacherSerializer.class)
-    private ArrayList<Teacher> teachers;
+    private List<Teacher> teachers;
+
+    public Student() {
+    }
 
     public Student (String name, String surname, int age, String email, String major) {
         Validator validator = new Validator();
@@ -91,7 +103,7 @@ public class Student {
         this.major = major;
     }
 
-    public ArrayList<Teacher> getTeachers() {
+    public List<Teacher> getTeachers() {
         return teachers;
     }
 
@@ -100,8 +112,10 @@ public class Student {
     }
 
     public void assignTeacher(Teacher teacher) {
-        if (!this.teachers.contains(teacher)) {
-            this.teachers.add(teacher);
+        if (this.teachers != null) {
+            if (!this.teachers.contains(teacher)) {
+                this.teachers.add(teacher);
+            }
         }
     }
 

@@ -7,19 +7,30 @@ import com.example.demo.Validator.Validator;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
-
+@Entity
+@Table
 public class Teacher {
+    @Id
     private Long id;
     private String name;
     private String surname;
     private int age;
     private String email;
     private String subject;
+    @ManyToMany
+    @JoinTable(
+            name = "teacher_student_pair",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
     @JsonSerialize(using = CustomStudentSerializer.class)
-    private ArrayList<Student> students;
+    private List<Student> students;
+
+    public Teacher(){}
 
     public Teacher (String name, String surname, int age, String email, String subject) {
         Validator validator = new Validator();
@@ -88,7 +99,7 @@ public class Teacher {
         this.subject = subject;
     }
 
-    public ArrayList<Student> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 
@@ -97,9 +108,12 @@ public class Teacher {
     }
 
     public void assignStudent(Student student) {
-        if (!this.students.contains(student)) {
-            this.students.add(student);
+        if (this.students != null) {
+            if (!this.students.contains(student)) {
+                this.students.add(student);
+            }
         }
+
     }
 
     public void removeStudent(Long id) {
