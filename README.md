@@ -2,20 +2,18 @@
 
 ## How to run
 
-To connect to your local Postgres database you may need to modify 'application.properties' file (task/src/main/resources) with your login and password.
+To connect to your local Postgres database you may need to modify 'application.properties' file (task/demo/src/main/resources) with your login and password.
+This app uses jdk-19.
 
 ### Open command prompt, navigate to project's root directory (task) and execute:
 
 ```bash
-# Navigate to 'task' directory
-$ cd task
+# Navigate to 'demo' directory
+$ cd task/demo
 
 # To run an app:
 $ mvn spring-boot:run
 
-# or from 'task' directory navigate to 'target' directory and run .jar file
-$ cd target
-$ java -jar .\task-0.0.1-SNAPSHOT.jar
 ```
 
 ## STUDENT endpoints
