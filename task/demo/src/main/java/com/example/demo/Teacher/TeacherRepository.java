@@ -1,6 +1,6 @@
 package com.example.demo.Teacher;
 
-import com.example.demo.Person.PersonRepository;
+
 import com.example.demo.Student.Student;
 import com.example.demo.Student.StudentRepository;
 import com.example.demo.Teacher.Teacher;

@@ -3,9 +3,11 @@ package com.example.demo.Student;
 import com.example.demo.Teacher.Teacher;
 import com.example.demo.Teacher.TeacherRepository;
 import com.example.demo.Teacher.TeacherService;
+import com.example.demo.Validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +48,7 @@ public class StudentService {
 
     public void removeTeacher(Long studentID, TeacherService teacherService, Long teacherID) {
         Student student = this.studentRepository.findById(studentID)
-                .orElseThrow(() -> new IllegalStateException("Student with id + inputId +  doesn't exist."));
+                .orElseThrow(() -> new IllegalStateException("Student with id "+ studentID + " doesn't exist."));
         student.removeTeacher(teacherID);
         Teacher teacher = teacherService.findById(teacherID);
         teacher.removeStudent(studentID);
@@ -58,18 +60,28 @@ public class StudentService {
     }
 
     public void delete(Long id) {
-        this.studentRepository.findAll().removeIf(x -> x.getId() == id);
+        boolean exists = studentRepository.existsById(id);
+        if (!exists) {
+            throw new IllegalStateException("This student doesn't exist");
+        }
+        this.studentRepository.deleteById(id);
     }
 
+    @Transactional
     public void update(Long id, Student student) {
-        student.setId(id);
-        List<Student> studentList = this.studentRepository.findAll();
-        for (int i = 0; i < studentList.size(); i++) {
-            if (studentList.get(i).getId() == id) {
-                studentList.set(i, student);
-                break;
-            }
+        Student oldStudent = this.studentRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Student with id "+ id + " doesn't exist."));
+        student.validatePut();
+        oldStudent.setAge(student.getAge());
+        oldStudent.setEmail(student.getEmail());
+        oldStudent.setName(student.getName());
+        if (student.getSurname() != null) {
+            oldStudent.setSurname(student.getSurname());
         }
+        if (student.getMajor() != null) {
+            oldStudent.setMajor((student.getMajor()));
+        }
+
     }
 
     public List<Student> sortByName(ArrayList<Student> students) {

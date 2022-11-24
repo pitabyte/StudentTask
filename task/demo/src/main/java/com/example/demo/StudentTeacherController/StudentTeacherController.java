@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 
 @RestController
-    @RequestMapping("/api")
+    @RequestMapping("/api/123")
     public class StudentTeacherController {
 
         @Autowired

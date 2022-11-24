@@ -1,6 +1,6 @@
 package com.example.demo.Teacher;
 
-import com.example.demo.Person.Person;
+
 import com.example.demo.Serializer.CustomStudentSerializer;
 import com.example.demo.Student.Student;
 import com.example.demo.Validator.Validator;
@@ -34,7 +34,7 @@ public class Teacher {
 
     public Teacher (String name, String surname, int age, String email, String subject) {
         Validator validator = new Validator();
-        if (!validator.patternMatches(email)) {
+        if (!validator.emailIsValid(email)) {
             throw new IllegalArgumentException(email + " is of an incorrect format");
         }
         if (name.length() < 3) {
@@ -122,6 +122,36 @@ public class Teacher {
             if (iterator.next().getId() == id) {
                 iterator.remove();
             }
+        }
+    }
+
+    public void validate() {
+        Validator validator = new Validator();
+        if (!validator.emailIsValid(this.getEmail())) {
+            throw new IllegalArgumentException("email:  " + email + " is of an incorrect format");
+        }
+        if (!validator.nameIsValid(this.getName())) {
+            throw new IllegalArgumentException("'name' must be at least 3 characters long");
+        }
+        if (!validator.ageIsValid(this.getAge())) {
+            throw new IllegalArgumentException("'age' must be at least 19");
+        }
+    }
+
+    public void validatePut() {
+        Validator validator = new Validator();
+        if (this.getEmail() != null) {
+            if (!validator.emailIsValid(this.getEmail())) {
+                throw new IllegalArgumentException("email:  " + email + " is of an incorrect format");
+            }
+        }
+        if (this.getName() != null) {
+            if (!validator.nameIsValid(this.getName())) {
+                throw new IllegalArgumentException("'name' must be at least 3 characters long");
+            }
+        }
+        if (!validator.ageIsValid(this.getAge())) {
+            throw new IllegalArgumentException("'age' must be at least 19");
         }
     }
 
