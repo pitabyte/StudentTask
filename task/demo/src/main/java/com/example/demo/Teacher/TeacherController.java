@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
         @PostMapping(path = "")
         public void addTeacher(@RequestBody Teacher teacher) {
+            teacher.validate();
             teacher.setId(teacherCounter.incrementAndGet());
             teacherService.add(teacher);
         }

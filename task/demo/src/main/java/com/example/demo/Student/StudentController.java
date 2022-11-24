@@ -21,8 +21,8 @@ public class StudentController {
 
     @PostMapping(path = "")
     public void addStudent(@RequestBody Student student) {
-        student.setId(studentCounter.incrementAndGet());
         student.validate();
+        student.setId(studentCounter.incrementAndGet());
         this.studentService.add(student);
     }
 

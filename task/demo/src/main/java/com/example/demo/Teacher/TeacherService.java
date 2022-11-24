@@ -6,6 +6,7 @@ import com.example.demo.Student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,18 +57,28 @@ public class TeacherService {
     }
 
     public void delete(Long id) {
-        this.teacherRepository.findAll().removeIf(x -> x.getId() == id);
+        boolean exists = teacherRepository.existsById(id);
+        if (!exists) {
+            throw new IllegalStateException("This teacher doesn't exist");
+        }
+        this.teacherRepository.deleteById(id);
     }
 
+    @Transactional
     public void update(Long id, Teacher teacher) {
-        teacher.setId(id);
-        List<Teacher> teacherList = this.teacherRepository.findAll();
-        for (int i = 0; i < teacherList.size(); i++) {
-            if (teacherList.get(i).getId() == id) {
-                teacherList.set(i, teacher);
-                break;
-            }
+        Teacher oldTeacher = this.teacherRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Teacher with id "+ id + " doesn't exist."));
+        teacher.validatePut();
+        oldTeacher.setAge(teacher.getAge());
+        oldTeacher.setEmail(teacher.getEmail());
+        oldTeacher.setName(teacher.getName());
+        if (teacher.getSurname() != null) {
+            oldTeacher.setSurname(teacher.getSurname());
         }
+        if (teacher.getSubject() != null) {
+            oldTeacher.setSubject((teacher.getSubject()));
+        }
+
     }
 
     public Teacher findById(Long id) {
