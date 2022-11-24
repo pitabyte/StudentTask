@@ -9,9 +9,9 @@ This app uses jdk-19.
 
 ```bash
 # Navigate to 'demo' directory
-$ cd task/demo
+$ cd demo
 
-# To run an app:
+# To run an app: (make sure you are in 'demo' directory)
 $ mvn spring-boot:run
 
 ```
