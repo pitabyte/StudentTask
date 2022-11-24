@@ -37,11 +37,11 @@ body example in JSON format:
 
 This endpoint takes multiple parameters: </br>
 </br>
-**'sort'** - if set to "true", students will be sorted by 'name' </br>
-'**teacherID**' - e.g. "1" - only students of a particular teacher will be returned </br>
-'**page**' - e.g. "2" - page 2 (counting from 0) will be returned </br>
-'**size**' - e.g. "3" - returns 3 results per page </br>
-'**name**' and '**surname**' - returns students with a particular 'name' and 'surname' </br>
+**sort** - if set to "true", students will be sorted by 'name' </br>
+**teacherID** - e.g. "1" - only students of a particular teacher will be returned </br>
+**page** - e.g. "2" - page 2 (counting from 0) will be returned </br>
+**size** - e.g. "3" - returns 3 results per page </br>
+**name** and **surname** - returns students with a particular 'name' and 'surname' </br>
 
 <b>PUT</b> (http://localhost:8080/api/student/{id}): </br>
 
