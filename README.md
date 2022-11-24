@@ -35,12 +35,12 @@ body example in JSON format:
 
 
 
-This endpoint takes multiple parameters:
-'sort' - if set to "true", students will be sorted by 'name'
-'teacherID' - e.g. "1" - only students of a particular teacher will be returned
-'page' - e.g. "2" - page 2 (counting from 0) will be returned
-'size' - e.g. "3" - returns 3 results per page
-'name' and 'surname' - returns students with a particular 'name' and 'surname'
+This endpoint takes multiple parameters: </br>
+'sort' - if set to "true", students will be sorted by 'name' </br>
+'teacherID' - e.g. "1" - only students of a particular teacher will be returned </br>
+'page' - e.g. "2" - page 2 (counting from 0) will be returned </br>
+'size' - e.g. "3" - returns 3 results per page </br>
+'name' and 'surname' - returns students with a particular 'name' and 'surname' </br>
 
 ### PUT (http://localhost:8080/api/student/{id}):
 
