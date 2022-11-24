@@ -37,11 +37,12 @@ body example in JSON format:
 
 
 
-This endpoints takes multiple parameters:
-'sort' - if set to "true", students will be sorted by name
-'teacherID' - e.g. "1" - only students of a particular teacher will be returned (whose teacherID is specified)
+This endpoint takes multiple parameters:
+'sort' - if set to "true", students will be sorted by 'name'
+'teacherID' - e.g. "1" - only students of a particular teacher will be returned
 'page' - e.g. "2" - page 2 (counting from 0) will be returned
 'size' - e.g. "3" - returns 3 results per page
+'name' and 'surname' - returns students with a particular 'name' and 'surname'
 
 ### PUT (http://localhost:8080/api/student/{id}):
 
@@ -78,12 +79,13 @@ body example in JSON format: (the only difference is that 'major' has changed to
     "subject": "informatyka"
 }
 ```
+All parameters specified in endpoints below are the same as in "student" endpoints
 
 ### GET (http://localhost:8080/api/teacher)
 ### PUT (http://localhost:8080/api/teacher/{id})
 ### DELETE (http://localhost:8080/api/teacher/{id})
-### POST (http://localhost:8080/api/student/{teacherID}/assign/{studentID})
-### POST (http://localhost:8080/api/student/{teacherID}/remove/{studentID})
+### POST (http://localhost:8080/api/teacher/{teacherID}/assign/{studentID})
+### POST (http://localhost:8080/api/teacher/{teacherID}/remove/{studentID})
 
 
  
