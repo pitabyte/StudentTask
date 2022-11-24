@@ -42,6 +42,7 @@ This endpoint takes multiple parameters: </br>
 **page** - e.g. "2" - page 2 (counting from 0) will be returned </br>
 **size** - e.g. "3" - returns 3 results per page </br>
 **name** and **surname** - returns students with a particular 'name' and 'surname' </br>
+e.g. http://localhost:8080/api/student?sort=true&teacherID=1&surname=adamowski </br>
 
 <b>PUT</b> (http://localhost:8080/api/student/{id}): </br>
 
