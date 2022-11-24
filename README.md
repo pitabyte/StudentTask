@@ -76,7 +76,7 @@ body example in JSON format: (the only difference is that 'major' has changed to
     "surname": "adamowski",
     "age": 21,
     "email": "adam@gmail.com",
-    "subject": "informatyka"
+    "subject": "programowanie"
 }
 ```
 All parameters specified in endpoints below are the same as in "student" endpoints
