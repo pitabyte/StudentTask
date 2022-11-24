@@ -72,9 +72,16 @@ public class StudentService {
         Student oldStudent = this.studentRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Student with id "+ id + " doesn't exist."));
         student.validatePut();
-        oldStudent.setAge(student.getAge());
-        oldStudent.setEmail(student.getEmail());
-        oldStudent.setName(student.getName());
+        if (student.getName() != null) {
+            oldStudent.setName(student.getName());
+        }
+
+        if (student.getEmail() != null) {
+            oldStudent.setEmail(student.getEmail());
+        }
+        if (student.getAge() != 0) {
+            oldStudent.setAge(student.getAge());
+        }
         if (student.getSurname() != null) {
             oldStudent.setSurname(student.getSurname());
         }

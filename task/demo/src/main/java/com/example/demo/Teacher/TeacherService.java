@@ -69,16 +69,21 @@ public class TeacherService {
         Teacher oldTeacher = this.teacherRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Teacher with id "+ id + " doesn't exist."));
         teacher.validatePut();
-        oldTeacher.setAge(teacher.getAge());
-        oldTeacher.setEmail(teacher.getEmail());
-        oldTeacher.setName(teacher.getName());
+        if (teacher.getAge() != 0) {
+            oldTeacher.setAge(teacher.getAge());
+        }
+        if (teacher.getName() != null) {
+            oldTeacher.setName(teacher.getName());
+        }
+        if (teacher.getEmail() != null) {
+            oldTeacher.setEmail(teacher.getEmail());
+        }
         if (teacher.getSurname() != null) {
             oldTeacher.setSurname(teacher.getSurname());
         }
         if (teacher.getSubject() != null) {
             oldTeacher.setSubject((teacher.getSubject()));
         }
-
     }
 
     public Teacher findById(Long id) {

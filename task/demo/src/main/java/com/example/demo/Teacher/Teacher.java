@@ -150,8 +150,10 @@ public class Teacher {
                 throw new IllegalArgumentException("'name' must be at least 3 characters long");
             }
         }
-        if (!validator.ageIsValid(this.getAge())) {
-            throw new IllegalArgumentException("'age' must be at least 19");
+        if (this.getAge() != 0) {
+            if (!validator.ageIsValid(this.getAge())) {
+                throw new IllegalArgumentException("'age' must be at least 19");
+            }
         }
     }
 
