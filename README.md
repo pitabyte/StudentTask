@@ -2,7 +2,7 @@
 
 ## How to run
 
-To connect to your local Postgres database you may need to modify 'application.properties' file (task/demo/src/main/resources) with your login and password.
+To connect to your local Postgres database you may need to modify 'application.properties' file (task/demo/src/main/resources) with your login and password. </br>
 This app uses jdk-19.
 
 ### Open command prompt, navigate to project's root directory (task) and execute:
